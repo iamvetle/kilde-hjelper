@@ -4,8 +4,6 @@ import type BlogArticleSource from "~/components/BlogArticleSource.vue";
         firstName: string;
         lastName: string;
     }
-
-
     
     type Date = {
         day:string;
@@ -24,6 +22,13 @@ import type BlogArticleSource from "~/components/BlogArticleSource.vue";
         title:string,
         url:string,
         authors: Author[]
+    }
+
+    export interface ScientificArticleSource extends StandardSource {
+        journalTitle:string;
+        volume:string;
+        issue:string;
+        doi:string;
     }
 
     export interface BlogArticleSource extends StandardSource {
