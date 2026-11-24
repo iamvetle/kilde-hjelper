@@ -7,7 +7,8 @@
 
         <div class="flex flex-col gap-1 grow">
             <label for="r-month" class="font-semibold">Hentet måned</label>
-            <select id="r-month" class="rounded-md p-1" v-model="source.month">
+            <select id="r-month" class="rounded-md p-1" v-model="source.retrievedMonth">
+                <option value="0">-</option>
                 <option value="1">Januar</option>
                 <option value="2">Februar</option>
                 <option value="3">Mars</option>

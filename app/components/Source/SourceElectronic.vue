@@ -5,7 +5,7 @@
         <FieldTitle />
 
         <FieldGeneric
-        v-model="source.website"
+        v-model.trim="source.website"
         input-id="blogTitle"
         input-type="type"
         >Nettsidens navn</FieldGeneric>
@@ -25,24 +25,7 @@
 
 const now = new Date();
 
-const source = useState<ElectronicSource>("source", () => {
-    return {
-        authors: [{
-            firstName: "",
-            lastName: ""
-        }], 
-        organizationAuthor: "",
-        title: "",
-        website: "",
-        day: "1",
-        month: "1",
-        year: "1900",
-        url: "",
-        retrievedDay: now.getDay().toString(),
-        retrievedYear: now.getFullYear().toString(),
-        retrievedMonth: now.getMonth().toString(),
-    }
-})
+const source = useState<ElectronicSource>("source", () => bigSource);
 
 const readyToShow = computed(() => {
     if (((source.value.authors.length > 0 && source.value.authors[0]?.firstName != "" && source.value.authors[0]?.lastName != "" ) || source.value.organizationAuthor.length > 0) &&

@@ -9,6 +9,7 @@
             <label for="month" class="font-semibold">Måned</label>
 
             <select id="month" class="rounded-md p-1" v-model="source.month">
+                <option value="0">-</option>
                 <option value="1">Januar</option>
                 <option value="2">Februar</option>
                 <option value="3">Mars</option>

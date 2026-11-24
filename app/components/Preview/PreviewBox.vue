@@ -7,13 +7,17 @@
             <div class="w-6 turn-around cursor-pointer" @click="turnAround()"></div>
         </div>
 
-        <PreviewBoxBlogArticle v-if="sourcetype == 'blogArticle'" 
-        :inline-referance="inlineReferance" :inline-referance-year="inlineReferanceYear"
-        :author="author" :date="date" :url="url" :inline-author="authorInline"/>
+        <PreviewBoxBlogArticle v-if="sourcetype == 'blogArticle'" :inline-referance="inlineReferance"
+            :inline-referance-year="inlineReferanceYear" :author="author" :date="date" :url="url"
+            :inline-author="authorInline" />
 
-        <PreviewBoxElectronicSource v-if="sourcetype == 'electronicSource'"
-        :inline-referance="inlineReferance" :inline-referance-year="inlineReferanceYear"
-        :author="author" :date="date" :url="url" :inline-author="authorInline" />
+        <PreviewBoxElectronicSource v-if="sourcetype == 'electronicSource'" :inline-referance="inlineReferance"
+            :inline-referance-year="inlineReferanceYear" :author="author" :date="date" :url="url"
+            :inline-author="authorInline" />
+
+        <PreviewBoxReportSource v-if="sourcetype == 'reportSource'" :inline-referance="inlineReferance"
+            :inline-referance-year="inlineReferanceYear" :author="author" :date="date" :url="url"
+            :inline-author="authorInline" />
     </div>
 </template>
 
@@ -39,17 +43,17 @@ const source = useState<StandardSource>("source")
 
 const date = computed(() => {
     // Doesn't have year
-    if (!source.value.year) {
+    if (source.value.year.length === 0) {
         return "u.å."
     }
 
     // Year, month and day
-    if (source.value.month && source.value.day) {
+    if (source.value.month !== "0" && source.value.day.length > 0) {
         return `${source.value.year}, ${source.value.day}. ${yearNumberMapping[source.value.month]}`
     }
 
     // Year, month but not day
-    if (source.value.month && source.value.year && !source.value.day) {
+    if (source.value.month !== "0" && source.value.year.length > 0 && source.value.day.length === 0) {
         return `${source.value.year}, ${yearNumberMapping[source.value.month]}`
     }
 

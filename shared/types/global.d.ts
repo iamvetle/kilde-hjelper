@@ -5,16 +5,18 @@ import type BlogArticleSource from "~/components/BlogArticleSource.vue";
         lastName: string;
     }
 
+
+    
     type Date = {
-        day:string?;
-        month:string?;
-        year:string?;
+        day:string;
+        month:string; // 0 means not choosen something
+        year:string;
     }
 
     type RetrievalDate = {
-        retrievedDay:string?;
-        retrievedMonth:string?;
-        retrievedYear:string?;
+        retrievedDay:string;
+        retrievedMonth:string; // 0 means not choosen something
+        retrievedYear:string;
     }
 
     export interface StandardSource extends Date, RetrievalDate {
@@ -32,5 +34,10 @@ import type BlogArticleSource from "~/components/BlogArticleSource.vue";
         website: string,
     }
     
+    export interface ReportSource extends StandardSource {
+        reportNameAndNumber:string,
+        publisher:string;
+    }
+
     // interface BossSource extends BlogArticleSource, ElectronicSource {
     // }

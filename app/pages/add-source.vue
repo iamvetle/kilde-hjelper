@@ -39,4 +39,5 @@ const componentMapping: { [key: string]: Component } = {
     encyclopedia: SourceEncyclopedia,
     scientificArticle: SourceScientificArticle
 }
+ 
 </script>
