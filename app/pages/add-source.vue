@@ -15,7 +15,6 @@
                     <option value="book">Bok</option>
                 </optgroup>
             </select>
-
             <component :is="componentMapping[sourceType]"/>
         </div>
     </div>
@@ -23,21 +22,21 @@
 
 
 <script lang="ts" setup>
-import ElectronicSource from "~/components/ElectronicSource.vue";
-import BookSource from "~/components/BookSource.vue";
-import BlogArticleSource from "~/components/BlogArticleSource.vue";
-import ReportSource from "~/components/ReportSource.vue";
-import EncyclopediaSource from "~/components/EncyclopediaSource.vue";
-import ScientificArticleSource from "~/components/ScientificArticleSource.vue";
+import SourceElectronic from "~/components/Source/SourceElectronic.vue";
+import SourceBook from "~/components/Source/SourceBook.vue";
+import SourceBlogArticle from "~/components/Source/SourceBlogArticle.vue";
+import SourceReport from "~/components/Source/SourceReport.vue";
+import SourceEncyclopedia from "~/components/Source/SourceEncyclopedia.vue";
+import SourceScientificArticle from "~/components/Source/SourceScientificArticle.vue";
 
 const sourceType = ref<string>("blogArticle");
 
 const componentMapping: { [key: string]: Component } = {
-    book: BookSource,
-    electronicSource: ElectronicSource,
-    blogArticle: BlogArticleSource,
-    report: ReportSource,
-    encyclopedia: EncyclopediaSource,
-    scientificArticle: ScientificArticleSource
+    book: SourceBook,
+    electronicSource: SourceElectronic,
+    blogArticle: SourceBlogArticle,
+    report: SourceReport,
+    encyclopedia: SourceEncyclopedia,
+    scientificArticle: SourceScientificArticle
 }
 </script>

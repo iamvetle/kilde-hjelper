@@ -1,38 +1,41 @@
 <template>
     <div id="preview">
-        <h2 class="font-bold">Forhåndsvisning</h2>
+        <div class="flex flex-row align-middle justify-between">
+            <h2 v-if="inlineReferance" class="font-semibold">Henvisning i teksten</h2>
+            <h2 v-else class="font-semibold">I litteraturliste</h2>
+
+            <div class="w-6 turn-around cursor-pointer" @click="turnAround()"></div>
+        </div>
 
         <PreviewBoxBlogArticle v-if="sourcetype == 'blogArticle'" 
-        :author="author"  
-        :date="date"
-        :url="url"
-        />
+        :inline-referance="inlineReferance" :inline-referance-year="inlineReferanceYear"
+        :author="author" :date="date" :url="url" :inline-author="authorInline"/>
+
+        <PreviewBoxElectronicSource v-if="sourcetype == 'electronicSource'"
+        :inline-referance="inlineReferance" :inline-referance-year="inlineReferanceYear"
+        :author="author" :date="date" :url="url" :inline-author="authorInline" />
     </div>
-</template> 
+</template>
 
 <script lang="ts" setup>
 defineProps<{
     sourcetype: string
 }>();
 
-const source = useState("source", () => {
-    return {
-        authors: [{
-            firstName: "",
-            lastName: ""
-        }], 
-        organizationAuthor: "",
-        title: "",
-        blogTitle: "",
-        day: null,
-        month: null,
-        year: null,
-        url: "",
-        retrievedDay: null,
-        retrievedYear: null,
-        retrievedMonth: null,
+const inlineReferance = ref(false);
+
+function turnAround() {
+    inlineReferance.value = !inlineReferance.value;
+}
+
+const inlineReferanceYear = computed(() => {
+    if (source.value.year) {
+        return source.value.year;
     }
+    return "u.å."
 })
+
+const source = useState<StandardSource>("source")
 
 const date = computed(() => {
     // Doesn't have year
@@ -69,13 +72,29 @@ const yearNumberMapping: any = {
 }
 
 const url = computed(() => {
-    
+
     // If there isn't any year
     if (!source.value.year && source.value.retrievedMonth) {
         return `Hentet ${source.value.retrievedDay}. ${yearNumberMapping[source.value.retrievedMonth]} ${source.value.retrievedYear} fra ${source.value.url}`
     }
 
     return source.value.url
+})
+
+const authorInline = computed(() => {
+    if (source.value.authors.length == 0) {
+        return `${source.value.organizationAuthor}`;
+    }
+
+    if (source.value.authors.length == 1) {
+        return `${source.value.authors[0]?.lastName}`;
+    }
+
+    if (source.value.authors.length == 2) {
+        return `${source.value.authors[0]?.lastName} & ${source.value.authors[0]?.lastName}`
+    }
+
+    return `${source.value.authors[0]?.lastName} et al`
 })
 
 const author = computed(() => {
@@ -85,11 +104,16 @@ const author = computed(() => {
         return source.value.organizationAuthor;
     }
 
-    let authorStringReturn = "";
 
     if (source.value.authors.length <= 0) {
         return "";
     }
+
+    if (source.value.authors.length == 1) {
+        return `${source.value.authors[0]?.lastName} ${source.value.authors[0]?.firstName[0]}`;
+    }
+
+    let authorStringReturn = "";
 
     for (let i = 0; i < source.value.authors.length; i++) {
         const authorTemp = source.value.authors[i];
@@ -132,3 +156,12 @@ const author = computed(() => {
 })
 
 </script>
+
+<style>
+.turn-around {
+    background-image: url("/turn-around.png");
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    background-position: center;
+}
+</style>
